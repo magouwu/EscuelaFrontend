@@ -4,20 +4,26 @@ import styled from 'styled-components'
 
 function Login() {
     const [enabled, SetEnabled] = useState(true)
+ 
+    const ValidateBtn = ()=>{
+        const IdUser = document.getElementById('user').value
+        const IdPass = document.getElementById('pass').value 
+        (IdUser!="" && IdPass!="") ? SetEnabled : enabled;
+    }
     return (
         <>
             <LoginContainer>
                 <h2>Sign In</h2>
                 <form >
                     <div className='floating-form'>
-                        <input type="text" placeholder=" " required></input>
+                        <input type="text" placeholder=" " id='user' required />
                         <label>User</label>
                     </div>
                     <div className='floating-form'>
-                        <input type="password" placeholder=" " required></input>
+                        <input type="password" placeholder=" " id='pass' required />
                         <label>Password</label>
                     </div>
-                    <input type="submit" className={`btn ${enabled ? "btn-disabled" : ""}`} disabled></input>
+                    <input type="submit" className={`btn ${enabled ? "btn-disabled" : ""}`} {enabled ? "disabled":""} />
                 </form>
             </LoginContainer>
         </>
@@ -49,9 +55,12 @@ h2{
     margin-bottom: 15px; 
     width:88%;
     border-radius: 10px;
-    font-size:   20px;
+    font-size:   15px;
     border: 1px solid black;
 
+}
+.floating-form input::placeholder{
+    color:transparent;
 }
 .floating-form{
     position: relative;
@@ -71,8 +80,8 @@ h2{
     opacity:.4;
 }
 .floating-form input:not(:placeholder-shown) + label{
-    top:-5px;
-    opacity:1;
+    top: 5px;
+    opacity:.4;
     font-size 12px;
 }
 .btn-disabled{
