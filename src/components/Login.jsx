@@ -6,31 +6,30 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
-     console.log("handleSubmit ran");
-     event.preventDefault();
-     
-     const url = 'http://localhost:3050/login'
-     const data = { username: user , password: password };
-      fetch(url, {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify(data),
+    console.log("handleSubmit ran");
+    event.preventDefault();
 
+    const url = "http://localhost:3050/login";
+    const data = { username: user, password: password };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
 
-     })
-     .then((response) => response.json())
- 
-     .then((data) => {
-      window.location="http://localhost:3000/portal"
-     })
-     .catch((error) => {
-       console.error('Error:', error);
-     });
-  //   //usar fetch o axios para procesar el login
-  //   // mandar mensaje de error en caso de falla
-  //   // utilizar windows.location en caso de exito
+      .then((data) => {
+        localStorage.setItem("token", data.token);
+        window.location = "http://localhost:3000/portal";
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    //   //usar fetch o axios para procesar el login
+    //   // mandar mensaje de error en caso de falla
+    //   // utilizar windows.location en caso de exito
   }; // 👈️ prevent page refresh
 
   return (
@@ -45,7 +44,6 @@ function Login() {
               onInput={(event) => {
                 setUser(event.target.value);
               }}
-              
               id="user"
               required
             />
