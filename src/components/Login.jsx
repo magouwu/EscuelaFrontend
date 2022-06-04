@@ -1,36 +1,83 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-
+import React, { useState } from "react";
+import styled from "styled-components";
 
 function Login() {
-    const [enabled, SetEnabled] = useState(true)
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (event) => {
+     console.log("handleSubmit ran");
+     event.preventDefault();
+     
+     const url = 'http://localhost:3050/login'
+     const data = { username: user , password: password };
+      fetch(url, {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify(data),
+
+
+     })
+     .then((response) => response.json())
  
-    const ValidateBtn = ()=>{
-        const IdUser = document.getElementById('user').value
-        const IdPass = document.getElementById('pass').value 
-        (IdUser!="" && IdPass!="") ? SetEnabled : enabled;
-    }
-    return (
-        <>
-            <LoginContainer>
-                <h2>Sign In</h2>
-                <form >
-                    <div className='floating-form'>
-                        <input type="text" placeholder=" " id='user' required />
-                        <label>User</label>
-                    </div>
-                    <div className='floating-form'>
-                        <input type="password" placeholder=" " id='pass' required />
-                        <label>Password</label>
-                    </div>
-                    <input type="submit" className={`btn ${enabled ? "btn-disabled" : ""}`} {enabled ? "disabled":""} />
-                </form>
-            </LoginContainer>
-        </>
-    )
+     .then((data) => {
+      window.location="http://localhost:3000/portal"
+     })
+     .catch((error) => {
+       console.error('Error:', error);
+     });
+  //   //usar fetch o axios para procesar el login
+  //   // mandar mensaje de error en caso de falla
+  //   // utilizar windows.location en caso de exito
+  }; // 👈️ prevent page refresh
+
+  return (
+    <>
+      <LoginContainer>
+        <h2>Sign In</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="floating-form">
+            <input
+              type="text"
+              placeholder=" "
+              onInput={(event) => {
+                setUser(event.target.value);
+              }}
+              
+              id="user"
+              required
+            />
+            <label>User</label>
+          </div>
+          <div className="floating-form">
+            <input
+              type="password"
+              placeholder=" "
+              onInput={(event) => {
+                setPassword(event.target.value);
+              }}
+              name="password"
+              id="pass"
+              required
+            />
+            <label>Password</label>
+          </div>
+          <button
+            type="submit"
+            className={`btn ${user && password ? "btn-disabled" : ""}`}
+            disabled={!(user && password)}
+          >
+            Sign in
+          </button>
+        </form>
+      </LoginContainer>
+    </>
+  );
 }
 
-export default Login
+export default Login;
 
 const LoginContainer = styled.div`
 @import url(//fast.fonts.net/t/1.css?apiType=css&projectid=dce2cd3c-2b49-496c-8fe8-f7eedea7aa2b);
@@ -67,12 +114,13 @@ h2{
 }
 .floating-form label{
     position: absolute;
-    top: 19px;
+    top: 14px;
     left: 10px;
     font-size: 20px
     pointer-events: none;
     transition: top .2s;
     font-weight: bold;
+    pointer-events: none;
 }
 .floating-form input:focus + label{
     top:5px;
@@ -90,8 +138,14 @@ h2{
     margin: 10px 0 20px 25%;
     
 }
+.btn{
+    height: 30px;
+    width: 50%;
+    margin: 10px 0 20px 25%;
+}
 
 @media(max-width:768px){
     width: 200px;
 }
-`
+
+`;

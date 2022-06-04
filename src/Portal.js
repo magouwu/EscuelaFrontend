@@ -1,8 +1,9 @@
 import React from 'react'
+import Sidebar from './components/Sidebar'
 
 function Portal() {
   return (
-    <div>Portal</div>
+    <div><Sidebar/></div>
   )
 }
 
