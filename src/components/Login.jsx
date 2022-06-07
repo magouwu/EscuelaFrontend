@@ -1,36 +1,23 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import styled from "styled-components";
 
+import useUser from "../hooks/useUser";
+
 function Login() {
-  const [user, setUser] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+
+  const { login, loginErr} = useUser();
+
 
   const handleSubmit = (event) => {
     console.log("handleSubmit ran");
     event.preventDefault();
-
-    const url = "http://localhost:3050/login";
-    const data = { username: user, password: password };
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-
-      .then((data) => {
-        localStorage.setItem("token", data.token);
-        window.location = "http://localhost:3000/portal";
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    //   //usar fetch o axios para procesar el login
-    //   // mandar mensaje de error en caso de falla
-    //   // utilizar windows.location en caso de exito
-  }; // 👈️ prevent page refresh
+    login({username,password});
+    
+  };
+  
 
   return (
     <>
@@ -41,8 +28,8 @@ function Login() {
             <input
               type="text"
               placeholder=" "
-              onInput={(event) => {
-                setUser(event.target.value);
+              onChange={(event) => {
+                setUsername(event.target.value);
               }}
               id="user"
               required
@@ -53,7 +40,7 @@ function Login() {
             <input
               type="password"
               placeholder=" "
-              onInput={(event) => {
+              onChange={(event) => {
                 setPassword(event.target.value);
               }}
               name="password"
@@ -62,10 +49,13 @@ function Login() {
             />
             <label>Password</label>
           </div>
+          <div className="lgn">
+            <span className={`${loginErr ? "login-err" : ""}`}>User or password are invalid... Please try again!</span>
+          </div>
           <button
             type="submit"
-            className={`btn ${user && password ? "btn-disabled" : ""}`}
-            disabled={!(user && password)}
+            className={`btn ${username && password ? "btn-disabled" : ""}`}
+            disabled={!(username && password)}
           >
             Sign in
           </button>
@@ -89,6 +79,17 @@ transform: translate(-50%,-50%);
 background-color: (249,249,249);
 box-shadow: 0px 0px 10px rgba(0,0,0,.2);
 
+
+.lgn{
+  visibility:hidden;
+  color: red;
+  font-size: 10px;
+  text-align: center;
+  margin:0;
+}
+.login-err{
+  visibility: visible;
+}
 h2{
   text-align: center;
   margin:0;

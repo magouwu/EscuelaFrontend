@@ -1,10 +1,23 @@
-import React from 'react'
-import Sidebar from './components/Sidebar'
+import { React } from "react";
+import Sidebar from "./components/Sidebar";
+
+import useUser from "./hooks/useUser";
 
 function Portal() {
-  return (
-    <div><Sidebar/></div>
-  )
+
+    //  const isLogged = false
+    const {isLogged} = useUser()
+      console.log("Console log de PORTAL: ",isLogged)
+      if(isLogged){
+      return (
+        <>
+        <Sidebar/>
+        </>
+      )}
+      if(!isLogged){
+        window.location = '/'
+      }
+
 }
 
-export default Portal
+export default Portal;
