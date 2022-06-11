@@ -19,9 +19,11 @@ export default function useUser() {
       })
       .then(response => response.json())
       .then((token) => {
-        console.log(token)
+        const isLogged = true
+        console.log(token, isLogged)
         window.localStorage.setItem('token', token)
         setToken(token)
+    
         
       })
       .catch((error) => {

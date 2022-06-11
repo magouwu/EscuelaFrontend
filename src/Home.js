@@ -6,8 +6,9 @@ import useUser from './hooks/useUser';
 function Home() {
 
 //  const isLogged = false
-const {isLogged} = useUser()
-  if(!isLogged) {
+var isLogged = false
+
+  if(isLogged===false) {
     console.log("Console log de HOME: " ,isLogged)
     return( 
     <>
@@ -15,7 +16,7 @@ const {isLogged} = useUser()
     </>
     );
   }
-  if(isLogged){
+  if(isLogged===true){
     window.location = '/Portal'
   }
 
