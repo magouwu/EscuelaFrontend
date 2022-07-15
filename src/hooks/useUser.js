@@ -6,8 +6,9 @@ export default function useUser() {
   const { token, setToken } = useContext(Context);
   const url = "http://192.168.100.9:3050/login";
   const [loginErr,setErr] = useState(false)
-
-  const login = useCallback(
+  const [userLogin,setUserlogin] = useState(false)
+ 
+  const login = (
     ({username,password}) => {
 
       return fetch(url, {
@@ -18,12 +19,11 @@ export default function useUser() {
         body: JSON.stringify({username,password}),
       })
       .then(response => response.json())
-      .then((token) => {
-        const isLogged = true
-        console.log(token, isLogged)
-        window.localStorage.setItem('token', token)
-        setToken(token)
-    
+      .then((data) => {
+        console.log('console log post json', data.username)
+        setUserlogin(data.username)
+        window.localStorage.setItem('token', data.token)
+        setToken(data.token)        
         
       })
       .catch((error) => {
@@ -32,17 +32,19 @@ export default function useUser() {
         setErr(true)
     
       });
-    },[setToken]);
+    });
 
   const logout = useCallback(() => {
     window.localStorage.removeItem('token')
     setToken(null);
+
   }, [setToken]);
 
   return {
     isLogged: Boolean(token),
     login,
     logout,
-    loginErr
+    loginErr,
+    userLogin
   };
 }

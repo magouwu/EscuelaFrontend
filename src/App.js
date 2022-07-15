@@ -1,21 +1,22 @@
 import "./App.css";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
-import Contact from "./Contact";
-import Projects from "./Projects";
 import Navbar from "./components/Navbar";
 import ErrorPage from "./ErrorPage";
 import Portal from "./Portal";
-
-
+import Context from "./Context/UserContext";
+import useResources from "./hooks/useResources";
 //Express js
 //Nodejs
 //
 import { UserContextProvider } from "./Context/UserContext";
 
 
-function App() {
+
+function App() {  
+const {getResources, user} = useResources()
+
   return (
     <div className="App">
       <UserContextProvider>
@@ -23,10 +24,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<ErrorPage />} />
-            <Route path="/portal" element={<Portal />} />
+            <Route path={"/:username"} element={<Portal />} component={user}/>
           </Routes>
         </Router>
       </UserContextProvider>

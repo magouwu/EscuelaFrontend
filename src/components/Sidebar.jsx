@@ -69,7 +69,7 @@ export default Sidebar;
 
 const SidebarContainer = styled.div`
   height: 100%;
-  width: 70px;
+  width: 68px;
   left: 0;
   padding: 6px 14px;
   background: #efeff1;
@@ -80,14 +80,14 @@ const SidebarContainer = styled.div`
   flex-wrap: nowrap;
 
   :hover {
+    overflow: visible;
     transition: all 0.3s ease;
     width: 272px;
-    overflow: visible;
+
   }
   .nav-list {
     padding: 0;
   }
-
   .nav-list li {
     position: relative;
     height: 50px;
@@ -109,11 +109,7 @@ const SidebarContainer = styled.div`
     color: #11101d;
     background: #fdfdfd;
   }
-  .nav-list li:hover .tooltip {
-    top: -70px;
-    transition: all 0.5s ease;
-    opacity: 1;
-  }
+  
   .fontIcon {
     height: 20px;
     min-width: 35px;
@@ -139,5 +135,10 @@ const SidebarContainer = styled.div`
     transition: 0s;
     opacity: 0;
     pointer-events: none;
+  }
+  .nav-list li:hover .tooltip {
+    top: -50px;
+    transition: all 0.5s ease;
+    opacity: 1;
   }
 `;
