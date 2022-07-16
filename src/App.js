@@ -7,6 +7,7 @@ import ErrorPage from "./ErrorPage";
 import Portal from "./Portal";
 import Context from "./Context/UserContext";
 import useResources from "./hooks/useResources";
+import Registry from "./Portal/Registry";
 //Express js
 //Nodejs
 //
@@ -25,7 +26,8 @@ const {getResources, user} = useResources()
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<ErrorPage />} />
-            <Route path={"/:username"} element={<Portal />} component={user}/>
+            <Route path={"/:username"} element={<Portal />} />
+            <Route path={"/:username/registry"} element={<Registry />} />
           </Routes>
         </Router>
       </UserContextProvider>

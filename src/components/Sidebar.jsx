@@ -10,9 +10,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 import useUser from "../hooks/useUser";
+import {
+  Link
+} from "react-router-dom";
 
-
-function Sidebar() {
+function Sidebar(props) {
 
   const { logout } = useUser();
 
@@ -21,15 +23,15 @@ function Sidebar() {
     logout();
     event.preventDefault();
   };
-
+ 
   return (
     <SidebarContainer>
       <ul className="nav-list">
         <li>
-          <a href="/">
+          <Link to={`/${props.user}`}>
             <FontAwesomeIcon className="fontIcon" icon={faUserGraduate} />
             <span className="link_name">Account</span>
-          </a>
+          </Link>
           <span className="tooltip">Account</span>
         </li>
         <li>
@@ -47,10 +49,10 @@ function Sidebar() {
           <span className="tooltip">Subjects in course..</span>
         </li>
         <li>
-          <a href="/">
+          <Link to={`/${props.user}/registry`}>
             <FontAwesomeIcon className="fontIcon" icon={faSchoolCircleCheck} />
             <span className="link_name">Registration Subjects</span>
-          </a>
+          </Link>
           <span className="tooltip">Registration Subjects</span>
         </li>
         <li>
