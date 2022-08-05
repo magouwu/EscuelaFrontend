@@ -4,7 +4,7 @@ import Context from "../Context/UserContext";
 
 export default function useUser() {
   const { token, setToken } = useContext(Context);
-  const url = "http://192.168.100.9:3050/login";
+  const url = "https://magoescuelabackend.herokuapp.com/login";
   const [loginErr,setErr] = useState(false)
   const [userLogin,setUserlogin] = useState(false)
  

@@ -19,9 +19,10 @@ const {getResources, user} = useResources()
     window.location = "/";
   } else {
     return (
-      <>
+      <><ParentContainer>
           <Sidebar user={user} />
           <Index user={user}/>
+          </ParentContainer>
       </>
     );
   }
@@ -34,3 +35,7 @@ const {getResources, user} = useResources()
 
 export default Portal;
 
+const ParentContainer = styled.div`
+display: flex;
+align-items:stretch;
+height: 100%;`

@@ -3,8 +3,9 @@ import Context from "../Context/UserContext";
 
 export default function useResources() {
     const {token} = useContext(Context)
-    const resources = "http://192.168.100.9:3050/getResources";
+    const resources = "https://magoescuelabackend.herokuapp.com/getResources";
     const [user,setUser] = useState(false)
+    const [subjects,setSubjects] = useState([])
    const getResources = async() => {
     console.log(token)
         if(token){
@@ -21,6 +22,7 @@ export default function useResources() {
             let capital = data.user
             let capitalized = capital.charAt(0).toUpperCase() + capital.slice(1);
             setUser(capitalized)
+            setSubjects(data.subjects)
             }  
         catch(err){
             console.error("error del fetch", err)
@@ -28,7 +30,11 @@ export default function useResources() {
     }
     else{ console.log("no hay token")}
     }
+
+    const sendRequest = async()=>{
+        console.log("hola")
+    }
     
-    return{getResources, user}
+    return{getResources, user, subjects,sendRequest}
         
 }

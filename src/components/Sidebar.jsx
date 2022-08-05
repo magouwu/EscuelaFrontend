@@ -25,6 +25,7 @@ function Sidebar(props) {
   };
  
   return (
+    <SidebarParent>
     <SidebarContainer>
       <ul className="nav-list">
         <li>
@@ -64,19 +65,22 @@ function Sidebar(props) {
         </li>
       </ul>
     </SidebarContainer>
+    </SidebarParent>
   );
 }
 
 export default Sidebar;
+const SidebarParent = styled.div`
+`
 
 const SidebarContainer = styled.div`
-  height: 100%;
+  
+  min-height: 100vh;
   width: 68px;
   left: 0;
   padding: 6px 14px;
   background: #efeff1;
   box-sizing: border-box;
-  position: fixed;
   overflow: hidden;
   display: flex;
   flex-wrap: nowrap;
