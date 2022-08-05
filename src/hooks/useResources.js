@@ -31,8 +31,8 @@ export default function useResources() {
     else{ console.log("no hay token")}
     }
 
-    const sendRequest = async()=>{
-        console.log("hola")
+    const sendRequest = async(data)=>{
+        console.log(data)
     }
     
     return{getResources, user, subjects,sendRequest}
