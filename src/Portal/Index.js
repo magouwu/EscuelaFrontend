@@ -1,13 +1,17 @@
 import React from 'react'
+import './container.css'
 import styled from 'styled-components'
-import  './container.css'
 
-
-function Index(props) {
+function Index({ user }) {
   return (
-    <div className='Container'><h1>Welcome {props.user}</h1></div>
+      <IndexContainer>
+        <h1>Welcome {user}</h1>
+      </IndexContainer>
   )
 }
 
 export default Index
 
+const IndexContainer = styled.div`
+  padding-left: 50px;
+`

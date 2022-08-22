@@ -1,71 +1,70 @@
-import React, { useState} from "react";
-import styled from "styled-components";
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
-import useUser from "../hooks/useUser";
+import useUser from '../hooks/useUser'
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-
-  const { login, loginErr} = useUser();
-
+  const { login, loginErr } = useUser()
 
   const handleSubmit = (event) => {
-    console.log("handleSubmit ran");
-    event.preventDefault();
-    login({username,password});
-    
-  };
-  
+    console.log('handleSubmit ran')
+    event.preventDefault()
+    login({ username, password })
+  }
 
   return (
     <>
       <LoginContainer>
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
-          <div className="floating-form">
+          <div className='floating-form'>
             <input
-              type="text"
-              placeholder=" "
+              type='text'
+              placeholder=' '
               onChange={(event) => {
-                setUsername(event.target.value);
+                setUsername(event.target.value)
               }}
-              id="user"
+              id='user'
               required
             />
             <label>User</label>
           </div>
-          <div className="floating-form">
+          <div className='floating-form'>
             <input
-              type="password"
-              placeholder=" "
+              type='password'
+              placeholder=' '
               onChange={(event) => {
-                setPassword(event.target.value);
+                setPassword(event.target.value)
               }}
-              name="password"
-              id="pass"
+              name='password'
+              id='pass'
               required
             />
             <label>Password</label>
           </div>
-          <div className="lgn">
-            <span className={`${loginErr ? "login-err" : ""}`}>User or password are invalid... Please try again!</span>
+          <div className='lgn'>
+            <span className={`${loginErr ? 'login-err' : ''}`}>
+              User or password are invalid... Please try again!
+            </span>
           </div>
           <button
-            type="submit"
-            className={`btn ${username && password ? "btn-disabled" : ""}`}
+            type='submit'
+            className={`btn ${username && password ? 'btn-disabled' : ''}`}
             disabled={!(username && password)}
           >
             Sign in
           </button>
         </form>
       </LoginContainer>
+
     </>
-  );
+  )
 }
 
-export default Login;
+export default Login
 
 const LoginContainer = styled.div`
 @import url(//fast.fonts.net/t/1.css?apiType=css&projectid=dce2cd3c-2b49-496c-8fe8-f7eedea7aa2b);
@@ -74,11 +73,10 @@ font-family: 'FF Mark W05', sans-serif;
 position: absolute;
 top: 50%;
 left: 50%;
-padding: 72.6px 48.38px 0; 48.38px;
+padding: 72.6px 48.38px 0;
 transform: translate(-50%,-50%);
 background-color: (249,249,249);
 box-shadow: 0px 0px 10px rgba(0,0,0,.2);
-
 
 .lgn{
   visibility:hidden;
@@ -115,7 +113,7 @@ h2{
     position: absolute;
     top: 14px;
     left: 10px;
-    font-size: 20px
+    font-size: 20px;
     pointer-events: none;
     transition: top .2s;
     font-weight: bold;
@@ -129,7 +127,7 @@ h2{
 .floating-form input:not(:placeholder-shown) + label{
     top: 5px;
     opacity:.4;
-    font-size 12px;
+    font-size: 12px;
 }
 .btn-disabled{
     height: 30px;
@@ -147,4 +145,4 @@ h2{
     width: 200px;
 }
 
-`;
+`

@@ -1,82 +1,80 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components";
+import { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styled from 'styled-components'
 import {
   faUserGraduate,
   faSchoolFlag,
   faSchoolCircleCheck,
   faBookBookmark,
-  faRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
-import "./Sidebar.css";
-import useUser from "../hooks/useUser";
-import {
-  Link
-} from "react-router-dom";
+  faRightFromBracket
+} from '@fortawesome/free-solid-svg-icons'
+import useUser from '../hooks/useUser'
+import { useLocation, Link } from 'wouter'
+import { motion } from 'framer-motion'
 
-function Sidebar(props) {
+function Sidebar({ user }) {
+  const { logout } = useUser()
+  const [location, pushLocation] = useLocation()
+  // const [selected, dispatch] = useReducer(reducer, {
+  //   selected:
+  // })
 
-  const { logout } = useUser();
-
-
+  const navigation = (name) => {
+    pushLocation(name)
+    console.log(location)
+  }
   const handleClick = (event) => {
-    logout();
-    event.preventDefault();
-  };
- 
+    logout()
+    event.preventDefault()
+  }
+  const sidebarItems = [
+    { id: 1, name: 'Account', link: `/${user}`, icon: faUserGraduate },
+    { id: 2, name: 'Academic History', link: `/${user}/history`, icon: faSchoolFlag },
+    { id: 3, name: 'Subjects in Course...', link: `/${user}/inCourse`, icon: faBookBookmark },
+    { id: 4, name: 'Registration Subjects', link: `/${user}/registry`, icon: faSchoolCircleCheck }
+  ]
+  const [selected, setSelected] = useState(() => sidebarItems.find(item => item.link === location)?.link || `/${user}`)
+
+  const sidebarShow = sidebarItems.map((item) => (
+    <li key={item.id} onClick={() => {
+      setSelected(item.link)
+      navigation(item.link)
+      console.log(location)
+    }
+    }>
+      <a>
+      {item.link === selected ? (<motion.div className='underline' layoutId='underline' />) : null}
+        <FontAwesomeIcon className='fontIcon' icon={item.icon} />
+        <span className='link_name'>{item.name}</span>
+        </a>
+      <span className='tooltip'>{item.name}</span>
+    </li>
+  ))
+
   return (
     <SidebarParent>
-    <SidebarContainer>
-      <ul className="nav-list">
-        <li>
-          <Link to={`/${props.user}`}>
-            <FontAwesomeIcon className="fontIcon" icon={faUserGraduate} />
-            <span className="link_name">Account</span>
-          </Link>
-          <span className="tooltip">Account</span>
-        </li>
-        <li>
-          <a href="/">
-            <FontAwesomeIcon className="fontIcon" icon={faSchoolFlag} />
-            <span className="link_name">Academic History</span>
-          </a>
-          <span className="tooltip">Academic History</span>
-        </li>
-        <li>
-          <a href="/">
-            <FontAwesomeIcon className="fontIcon" icon={faBookBookmark} />
-            <span className="link_name">Subjects in course..</span>
-          </a>
-          <span className="tooltip">Subjects in course..</span>
-        </li>
-        <li>
-          <Link to={`/${props.user}/registry`}>
-            <FontAwesomeIcon className="fontIcon" icon={faSchoolCircleCheck} />
-            <span className="link_name">Registration Subjects</span>
-          </Link>
-          <span className="tooltip">Registration Subjects</span>
-        </li>
-        <li>
-          <a href="/" onClick={handleClick}>
-            <FontAwesomeIcon className="fontIcon" icon={faRightFromBracket} />
-            <span className="link_name">Log out</span>
-          </a>
-          <span className="tooltip">Log out</span>
-        </li>
-      </ul>
-    </SidebarContainer>
+      <SidebarContainer>
+        <ul className='nav-list'>
+          {sidebarShow}
+          <li>
+            <Link to='/' onClick={() => handleClick()}>
+              <FontAwesomeIcon className='fontIcon' icon={faRightFromBracket} />
+              <span className='link_name'>Log Out</span>
+            </Link>
+            <span className='tooltip'>Log Out</span>
+          </li>
+        </ul>
+      </SidebarContainer>
     </SidebarParent>
-  );
+  )
 }
 
-export default Sidebar;
-const SidebarParent = styled.div`
-`
+export default Sidebar
+const SidebarParent = styled.div``
 
 const SidebarContainer = styled.div`
-  
   min-height: 100vh;
-  width: 68px;
+  width: 69.8px;
   left: 0;
   padding: 6px 14px;
   background: #efeff1;
@@ -84,15 +82,18 @@ const SidebarContainer = styled.div`
   overflow: hidden;
   display: flex;
   flex-wrap: nowrap;
+  --accent: #8855ff;
 
   :hover {
     overflow: visible;
     transition: all 0.3s ease;
     width: 272px;
-
   }
   .nav-list {
     padding: 0;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
   }
   .nav-list li {
     position: relative;
@@ -100,8 +101,9 @@ const SidebarContainer = styled.div`
     width: 100%;
     list-style: none;
     margin: 0 5px;
-    line-height: 5px;
+    line-height: 0px;
     font-size: 20px;
+    cursor: pointer;  
   }
   .nav-list li a {
     text-decoration: none;
@@ -110,21 +112,24 @@ const SidebarContainer = styled.div`
     align-items: center;
     transition: all 0.2s ease;
     border-radius: 12px;
+    height:100%;
+    background-color: --accent;
   }
   .nav-list li a:hover {
     color: #11101d;
     background: #fdfdfd;
   }
-  
+
   .fontIcon {
     height: 20px;
     min-width: 35px;
     border-radius: 12px;
     line-height: 50px;
     text-align: center;
-    margin-right: 15px;
+    padding: 10px;
   }
   .link_name {
+    pointer-events: none;
   }
   .tooltip {
     position: relative;
@@ -147,4 +152,9 @@ const SidebarContainer = styled.div`
     transition: all 0.5s ease;
     opacity: 1;
   }
-`;
+  .underline{
+    position: absolute;
+    height: 50px;
+    border-left: 6px solid blue;
+  }
+`

@@ -1,22 +1,19 @@
-import { React, useContext,useEffect} from "react";
-import Context from "./Context/UserContext";
-import Sidebar from "./components/Sidebar";
-import useUser from "./hooks/useUser";
-import useResources from "./hooks/useResources";
-import Index from "./Portal/Index";
-import styled from "styled-components"
-function Portal() {
-  const { isLogged } = useUser();
-  console.log("Console log de PORTAL: ", isLogged);
-  
-const {getResources, user} = useResources()
-  
+import { React, useEffect } from 'react'
+import Sidebar from './components/Sidebar'
+import useUser from './hooks/useUser'
+import useResources from './hooks/useResources'
+import Index from './Portal/Index'
+import styled from 'styled-components'
+function Portal () {
+  const { isLogged } = useUser()
+  const { getResources, user } = useResources()
+
   useEffect(() => {
     getResources()
-}, [])
+  }, [])
 
   if (!isLogged) {
-    window.location = "/";
+    window.location = '/'
   } else {
     return (
       <><ParentContainer>
@@ -24,16 +21,16 @@ const {getResources, user} = useResources()
           <Index user={user}/>
           </ParentContainer>
       </>
-    );
+    )
   }
 
   // }
   // if(!isLogged){
   //   window.location = '/'
   // }
-}   
+}
 
-export default Portal;
+export default Portal
 
 const ParentContainer = styled.div`
 display: flex;
